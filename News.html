@@ -1,253 +1,217 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nachrichten in 100 Sekunden im Wartezimmer</title>
-<style>
-  body {
-    margin: 0;
-    background: #111;
-    color: #fff;
-    font-family: "Open Sans", Arial, sans-serif;
-    overflow: hidden;
-  }
-
-  .container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  /* Hintergrundbild */
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: opacity 1s ease;
-  }
-
-  /* Bauchbinde mit Titel und Beschreibung */
-  .text-overlay {
-    position: absolute;
-    bottom: 4%; /* Abstand von unten */
-    right: 0;   /* Rechtsbündig */
-    width: 90%;  /* 90% der Breite für die Bauchbinde */
-    background: rgba(14, 31, 83, 0.7); /* Transparente Bauchbinde mit der Farbe #0e1f53 */
-    padding: 20px 30px;
-    box-sizing: border-box;
-  }
-
-  /* Titel-Text */
-  .text-overlay h1 {
-    font-size: 1.5em; /* Kleinere Schriftgröße für den Titel */
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left; /* Titel linksbündig */
-  }
-
-  /* Beschreibungstext */
-  .text-overlay p {
-    font-size: 1em; /* Kleinere Schriftgröße für die Beschreibung */
-    margin: 10px 0 0 0; /* Abstand nach dem Titel */
-    overflow: visible; /* Keine Beschneidung mehr */
-    white-space: normal; /* Damit die Beschreibung unter dem Titel geht */
-    text-align: left; /* Beschreibung linksbündig */
-  }
-
-  /* Container für Uhr und Ticker */
-  #bottomBar {
-    position: absolute;
-    bottom: 0;
-    right: 0;  /* Am rechten Bildschirmrand */
-    width: 90%; /* Ganze Breite der blauen Leiste */
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background: #0e1f53; /* Hintergrundfarbe für die Leiste */
-    padding: 5px 0; /* Verringere Höhe der Leiste */
-  }
-
-  /* Uhr */
-  #clock {
-    background: #0e1f53; /* Hintergrundfarbe der Uhr */
-    padding: 5px 10px;
-    font-size: 1.2em; /* Gleiche Schriftgröße wie Ticker */
-    font-weight: bold;
-    width: 10%; /* 10% Breite für die Uhr */
-    text-align: center;
-  }
-
-  /* Tickerleiste */
-  #ticker {
-    background: #0e1f53; /* Hintergrundfarbe des Tickers */
-    padding: 5px 10px;
-    font-size: 1.2em; /* Gleiche Schriftgröße wie Uhr */
-    font-weight: bold;
-    width: 80%;  /* 80% Breite für den Ticker */
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden; /* Versteckt Text, der aus dem Container herausgeht */
-  }
-
-  /* Fade-Effekte für Übergänge */
-  .fade-out {
-    opacity: 0;
-  }
-
-  .fade-in {
-    opacity: 1;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Signage</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: "Open Sans", Arial, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 1s ease;
+    }
+    .text-overlay {
+      position: absolute;
+      bottom: 4%;
+      right: 0;
+      width: 90%;
+      background: rgba(14, 31, 83, 0.7);
+      padding: 20px 30px;
+      box-sizing: border-box;
+    }
+    .text-overlay h1 {
+      font-size: 1.5em;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
+    .text-overlay p {
+      font-size: 1em;
+      margin: 10px 0 0 0;
+      white-space: normal;
+      text-align: left;
+    }
+    #bottomBar {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 90%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      background: #0e1f53;
+      padding: 5px 0;
+    }
+    #clock {
+      padding: 5px 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      width: 10%;
+      text-align: center;
+    }
+    #ticker {
+      padding: 5px 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      width: 80%;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-  <img id="newsImage" src="" alt="Nachrichtensymbol">
-  
-  <!-- Bauchbinde mit Titel und Beschreibung -->
-  <div class="text-overlay">
-    <h1 id="newsTitle">Lädt aktuelle Nachrichten...</h1>
-    <p id="newsDescription"></p>
+  <div class="container">
+    <img id="newsImage" src="" alt="Nachrichtensymbol" />
+    <div class="text-overlay">
+      <h1 id="newsTitle">Lädt aktuelle Nachrichten...</h1>
+      <p id="newsDescription"></p>
+    </div>
+    <div id="bottomBar">
+      <div id="clock">00:00</div>
+      <div id="ticker">Börsenwerte werden geladen...</div>
+    </div>
   </div>
 
-  <!-- Blaue Leiste (direkt unter der Bauchbinde) -->
-  <div id="bottomBar">
-    <div id="clock">00:00</div>
-    <div id="ticker">Börsenwerte werden geladen...</div>
-  </div>
-</div>
+  <script>
+    // --- Nachrichten & Uhr ---
+    const placeholderImage = "https://via.placeholder.com/1920x1080?text=Keine+Vorschau";
+    const newsImage = document.getElementById("newsImage");
+    const newsTitle = document.getElementById("newsTitle");
+    const newsDescription = document.getElementById("newsDescription");
 
-<script>
-const feeds = [
-  "https://www.tagesschau.de/infoservices/alle-meldungen-100~rss2.xml"
-];
+    newsImage.onerror = () => newsImage.src = placeholderImage;
 
-let newsItems = [];
-let currentIndex = 0;
-const placeholderImage = "https://via.placeholder.com/1920x1080?text=Keine+Vorschau";
+    let newsItems = [], currentIndex = 0;
 
-const newsImage = document.getElementById('newsImage');
-const newsTitle = document.getElementById('newsTitle');
-const newsDescription = document.getElementById('newsDescription');
-const ticker = document.getElementById('ticker');
+    async function fetchNews() {
+      try {
+        const res = await fetch(
+          'https://api.allorigins.win/get?url=' +
+          encodeURIComponent('https://www.tagesschau.de/infoservices/alle-meldungen-100~rss2.xml')
+        );
+        const data = await res.json();
+        const xml = new DOMParser().parseFromString(data.contents, "application/xml");
+        newsItems = Array.from(xml.querySelectorAll("item")).map(item => ({
+          title: item.querySelector("title").textContent,
+          description: item.querySelector("description").textContent.replace(/<[^>]+>/g,'').trim(),
+          imageUrl: getImageUrl(item) || placeholderImage
+        }));
+        showNews(); setInterval(nextNews, 10000);
+      } catch(e){ console.error("News-Error:", e); }
+    }
 
-newsImage.onerror = () => {
-  newsImage.src = placeholderImage;
-};
-
-function enlargeImageUrl(imageUrl) {
-  if (imageUrl) {
-    return imageUrl.replace(/w\d+/i, "w1920");
-  }
-  return imageUrl;
+function getImageUrl(item) {
+  const enclosure = item.querySelector("enclosure");
+  if (enclosure) return enclosure.getAttribute("url");
+  const html = item.getElementsByTagName("content:encoded")[0]?.textContent;
+  const match = html?.match(/<img[^>]+src="([^">]+)"/);
+  return match?.[1] || placeholderImage;
 }
 
-async function fetchNews() {
-  try {
-    const allItems = [];
+    function showNews() {
+      const it = newsItems[currentIndex];
+      newsImage.src = it.imageUrl;
+      newsTitle.textContent = it.title;
+      newsDescription.textContent = it.description;
+    }
 
-    for (const feedUrl of feeds) {
-      const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl));
-      const data = await response.json();
-      const text = data.contents;
+    function nextNews() {
+      currentIndex = (currentIndex + 1) % newsItems.length;
+      showNews();
+    }
 
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(text, "application/xml");
-      const items = xml.querySelectorAll("item");
+    function updateClock() {
+      const now = new Date();
+      const h = now.getHours().toString().padStart(2, '0');
+      const m = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById("clock").textContent = `${h}:${m}`;
+    }
 
-      items.forEach(item => {
-        const title = item.querySelector("title")?.textContent || "Keine Überschrift";
-        const rawDesc = item.querySelector("description")?.textContent || "";
-        const description = rawDesc.replace(/<[^>]*>/g, '').trim();
+    updateClock(); setInterval(updateClock, 10000);
+    fetchNews();
 
-        let imageUrl = null;
-        const contentEncoded = item.getElementsByTagName("content:encoded")[0]?.textContent;
-        if (contentEncoded) {
-          const match = contentEncoded.match(/<img[^>]+src="([^">]+)"/);
-          if (match && match[1]) {
-            imageUrl = match[1];
-          }
+    // --- Robuster CSV-Parser für Börsenticker ---
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      return lines.slice(1).map(line => {
+        const result = [];
+        let field = '', inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const c = line[i];
+          if (c === '\"' && line[i+1] === '\"') { field += '\"'; i++; continue; }
+          if (c === '\"') { inQuotes = !inQuotes; continue; }
+          if (c === ',' && !inQuotes) { result.push(field); field = ''; }
+          else { field += c; }
         }
-
-        if (!imageUrl) {
-          const enclosure = item.querySelector("enclosure");
-          if (enclosure) {
-            imageUrl = enclosure.getAttribute("url");
-          }
-        }
-
-        if (!imageUrl) {
-          imageUrl = placeholderImage;
-        }
-
-        imageUrl = enlargeImageUrl(imageUrl);
-
-        const pubDate = item.querySelector("pubDate")?.textContent;
-        const date = pubDate ? new Date(pubDate) : new Date();
-
-        allItems.push({ title, description, imageUrl, date });
+        result.push(field);
+        const obj = {};
+        headers.forEach((h, idx) => obj[h] = (result[idx] || '').trim());
+        return obj;
       });
     }
 
-    // Sortieren nach Datum (neueste zuerst)
-    allItems.sort((a, b) => b.date - a.date);
+// --- Börsenticker: Seitenweise anzeigen (5 Kurse alle 10 Sekunden) ---
+const tickerEl = document.getElementById("ticker");
+const csvUrl = "https://docs.google.com/spreadsheets/d/140PpFgGjAuKEBV8qObdBwi7d-RUpvrYwp8cP-eSCUA0/export?format=csv";
+const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(csvUrl);
 
-    // Nur die neuesten 10
-    newsItems = allItems.slice(0, 10);
+let tickerItems = [];
+let tickerIndex = 0;
 
-    showNews();
-    setInterval(nextNews, 10000);
-  } catch (e) {
-    console.error("Fehler beim Laden der Nachrichten", e);
-    newsTitle.textContent = "504 Gateway Timeout";
-    newsDescription.textContent = "";
+async function fetchTickerData() {
+  try {
+    const res = await fetch(proxyUrl);
+    const text = await res.text();
+    const data = parseCSV(text);
+    if (!data.length) throw new Error("Keine Daten gefunden");
+    tickerItems = data.map(r => `${r.name}: ${r.value} ${r.change}`);
+    showTickerPage();
+  } catch (err) {
+    console.error("Ticker-Error:", err);
+    tickerEl.textContent = "Börsendaten konnten nicht geladen werden.";
   }
 }
 
-function showNews() {
-  if (newsItems.length === 0) return;
-  const item = newsItems[currentIndex];
+function showTickerPage() {
+  if (tickerItems.length === 0) {
+    tickerEl.textContent = "Keine Tickerdaten";
+    return;
+  }
 
-  newsImage.classList.add('fade-out');
-  newsTitle.classList.add('fade-out');
-  newsDescription.classList.add('fade-out');
+  const pageSize = 5;
+  const start = tickerIndex * pageSize;
+  const end = start + pageSize;
+  const page = tickerItems.slice(start, end);
 
-  setTimeout(() => {
-    newsImage.src = item.imageUrl || placeholderImage;
-    newsTitle.textContent = item.title;
-    newsDescription.textContent = item.description;
+  tickerEl.textContent = page.join(" \u00A0\u00A0\u00A0\u00A0 ");
 
-    newsImage.classList.remove('fade-out');
-    newsImage.classList.add('fade-in');
-    newsTitle.classList.remove('fade-out');
-    newsTitle.classList.add('fade-in');
-    newsDescription.classList.remove('fade-out');
-    newsDescription.classList.add('fade-in');
-  }, 1000);
+  tickerIndex = (tickerIndex + 1) % Math.ceil(tickerItems.length / pageSize);
 }
 
-function nextNews() {
-  currentIndex = (currentIndex + 1) % newsItems.length;
-  showNews();
-}
+fetchTickerData();
+setInterval(fetchTickerData, 60000);     // CSV neu laden jede Minute
+setInterval(showTickerPage, 10000);      // Alle 10 Sekunden 5 neue anzeigen
 
-function updateClock() {
-  const clock = document.getElementById("clock");
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, "0");
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  clock.textContent = `${hours}:${minutes}`;
-}
 
-fetchNews();
-updateClock();
-setInterval(updateClock, 10000);
-</script>
-
+  </script>
 </body>
 </html>
