@@ -197,7 +197,7 @@ function showTickerPage() {
     return;
   }
 
-  const pageSize = 5;
+  const pageSize = 3;                     // 3 Werte je Seite
   const start = tickerIndex * pageSize;
   const end = start + pageSize;
   const page = tickerItems.slice(start, end);
@@ -209,7 +209,7 @@ function showTickerPage() {
 
 fetchTickerData();
 setInterval(fetchTickerData, 60000);     // CSV neu laden jede Minute
-setInterval(showTickerPage, 10000);      // Alle 10 Sekunden 5 neue anzeigen
+setInterval(showTickerPage, 7000);      // Alle 7 Sekunden 3 neue anzeigen
 
 
   </script>
