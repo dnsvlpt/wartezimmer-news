@@ -1,145 +1,214 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wartezimmer Nachrichten</title>
-  <!-- Google Font Open Sans einbinden -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    /* Grundlayout */
-    body {
-      margin: 0;
-      background: #111;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-      /* Schriftarten: Open Sans, Arial, Calibri, sans-serif */
-      font-family: 'Open Sans', Arial, Calibri, sans-serif;
-    }
-    /* Container passt sich 16:9 an */
-    .news-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-    }
-    /* Bild füllt Container vollständig */
-    img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: opacity 1s ease;
-    }
-    /* Overlay-Box am unteren Rand des Containers */
-    .overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      padding: 20px;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    .overlay h1 {
-      margin: 0;
-      font-size: 2.5em;
-      line-height: 1.2em;
-      font-weight: 600;
-    }
-    .overlay p {
-      margin: 10px 0 0;
-      font-size: 1.2em;
-      line-height: 1.4em;
-      font-weight: 400;
-    }
-    /* Fade-Effekte */
-    .fade-out { opacity: 0; }
-    .fade-in  { opacity: 1; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nachrichten in 100 Sekunden fürs Wartezimmer</title>
+<!-- Google Font Open Sans einbinden -->
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    background: #111;
+    color: #fff;
+    font-family: "Open Sans", Calibri, sans-serif;
+    overflow: hidden;
+  }
+
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 1s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .text-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px 40px;
+    box-sizing: border-box;
+  }
+
+  .text-overlay h1 {
+    font-size: 2.5em;
+    margin: 0 0 10px 0;
+  }
+
+  .text-overlay p {
+    font-size: 1.3em;
+    margin: 0;
+  }
+
+  #clock {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  .fade-out {
+    opacity: 0;
+  }
+
+  .fade-in {
+    opacity: 1;
+  }
+</style>
 </head>
 <body>
-  <div class="news-container">
-    <img id="newsImage" src="" alt="Nachrichtenbild">
-    <div class="overlay">
-      <h1 id="newsTitle">Aktuelle Top-Nachrichten werden geladen...</h1>
-      <p id="newsDescription"></p>
-    </div>
+
+<div class="container">
+  <img id="newsImage" src="" alt="">
+  <div class="text-overlay">
+    <h1 id="newsTitle">Aktuelle Top-Nachrichten werden geladen...</h1>
+    <p id="newsDescription"></p>
   </div>
+  <div id="clock">00:00</div>
+</div>
 
-  <script>
-    let newsItems = [], currentIndex = 0;
-    const placeholderImage = "https://via.placeholder.com/1920x1080?text=Keine+Vorschau";
-    const newsImage = document.getElementById('newsImage');
-    const newsTitle = document.getElementById('newsTitle');
-    const newsDescription = document.getElementById('newsDescription');
+<script>
+const feeds = [
+  "https://www.handelsblatt.com/contentexport/feed/wirtschaft",
+  "https://www.tagesschau.de/inland/gesellschaft/index~rss2.xml",
+  "https://www.tagesschau.de/inland/innenpolitik/index~rss2.xml",
+  "https://www.tagesschau.de/wissen/technologie/index~rss2.xml"
+];
 
-    newsImage.onerror = () => { newsImage.src = placeholderImage; };
+let newsItems = [];
+let currentIndex = 0;
+const placeholderImage = "https://via.placeholder.com/1920x1080?text=Keine+Vorschau";
 
-    function extractImageFromDescription(desc) {
-      const m = desc.match(/<img[^>]+src="([^"]+)"/);
-      return m ? m[1] : null;
+const newsImage = document.getElementById('newsImage');
+const newsTitle = document.getElementById('newsTitle');
+const newsDescription = document.getElementById('newsDescription');
+
+newsImage.onerror = () => {
+  newsImage.src = placeholderImage;
+};
+
+function enlargeImageUrl(imageUrl) {
+  if (imageUrl) {
+    return imageUrl.replace(/w\d+/i, "w1920");
+  }
+  return imageUrl;
+}
+
+async function fetchNews() {
+  try {
+    const allItems = [];
+
+    for (const feedUrl of feeds) {
+      const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl));
+      const data = await response.json();
+      const text = data.contents;
+
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, "application/xml");
+      const items = xml.querySelectorAll("item");
+
+      items.forEach(item => {
+        const title = item.querySelector("title")?.textContent || "Keine Überschrift";
+        const rawDesc = item.querySelector("description")?.textContent || "";
+        const description = rawDesc.replace(/<[^>]*>/g, '').trim();
+
+        let imageUrl = null;
+        const contentEncoded = item.getElementsByTagName("content:encoded")[0]?.textContent;
+        if (contentEncoded) {
+          const match = contentEncoded.match(/<img[^>]+src="([^">]+)"/);
+          if (match && match[1]) {
+            imageUrl = match[1];
+          }
+        }
+
+        if (!imageUrl) {
+          const enclosure = item.querySelector("enclosure");
+          if (enclosure) {
+            imageUrl = enclosure.getAttribute("url");
+          }
+        }
+
+        if (!imageUrl) {
+          imageUrl = placeholderImage;
+        }
+
+        imageUrl = enlargeImageUrl(imageUrl);
+
+        const pubDate = item.querySelector("pubDate")?.textContent;
+        const date = pubDate ? new Date(pubDate) : new Date();
+
+        allItems.push({ title, description, imageUrl, date });
+      });
     }
 
-    function enlargeImageUrl(url) {
-      return url ? url.replace(/w\d+/i, "w1920") : url;
-    }
+    // Sortieren nach Datum (neueste zuerst)
+    allItems.sort((a, b) => b.date - a.date);
 
-    async function fetchNews() {
-      try {
-        const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.n-tv.de/rss'));
-        const json = await res.json();
-        const xml = new DOMParser().parseFromString(json.contents, "application/xml");
-        const items = Array.from(xml.querySelectorAll("item"))
-          .filter(i => (i.querySelector("title")?.textContent || "").length > 5)
-          .slice(0,9)
-          .map(i => {
-            const t = i.querySelector("title")?.textContent || "Keine Überschrift";
-            const descRaw = i.querySelector("description")?.textContent || "";
-            const desc = descRaw.replace(/<[^>]*>/g, '').trim();
-            let img = extractImageFromDescription(i.querySelector("content\\:encoded")?.textContent || "")
-                   || i.querySelector("enclosure")?.getAttribute("url")
-                   || placeholderImage;
-            return { title: t, description: desc, imageUrl: enlargeImageUrl(img) };
-          });
-        newsItems = items;
-        showNews();
-        setInterval(nextNews, 10000);
-      } catch(e) {
-        console.error(e);
-        newsTitle.textContent = "Fehler beim Laden.";
-        newsDescription.textContent = "";
-      }
-    }
+    // Nur die neuesten 10
+    newsItems = allItems.slice(0, 10);
 
-    function showNews() {
-      if (!newsItems.length) return;
-      const { title, description, imageUrl } = newsItems[currentIndex];
-      newsImage.classList.add('fade-out');
-      newsTitle.classList.add('fade-out');
-      newsDescription.classList.add('fade-out');
-      setTimeout(() => {
-        newsImage.src = imageUrl;
-        newsTitle.textContent = title;
-        newsDescription.textContent = description;
-        newsImage.classList.replace('fade-out','fade-in');
-        newsTitle.classList.replace('fade-out','fade-in');
-        newsDescription.classList.replace('fade-out','fade-in');
-      }, 1000);
-    }
+    showNews();
+    setInterval(nextNews, 10000);
+  } catch (e) {
+    console.error("Fehler beim Laden der Nachrichten", e);
+    newsTitle.textContent = "Fehler beim Laden.";
+    newsDescription.textContent = "";
+  }
+}
 
-    function nextNews() {
-      currentIndex = (currentIndex + 1) % newsItems.length;
-      showNews();
-    }
+function showNews() {
+  if (newsItems.length === 0) return;
+  const item = newsItems[currentIndex];
 
-    fetchNews();
-  </script>
+  newsImage.classList.add('fade-out');
+  newsTitle.classList.add('fade-out');
+  newsDescription.classList.add('fade-out');
+
+  setTimeout(() => {
+    newsImage.src = item.imageUrl || placeholderImage;
+    newsTitle.textContent = item.title;
+    newsDescription.textContent = item.description;
+
+    newsImage.classList.remove('fade-out');
+    newsImage.classList.add('fade-in');
+    newsTitle.classList.remove('fade-out');
+    newsTitle.classList.add('fade-in');
+    newsDescription.classList.remove('fade-out');
+    newsDescription.classList.add('fade-in');
+  }, 1000);
+}
+
+function nextNews() {
+  currentIndex = (currentIndex + 1) % newsItems.length;
+  showNews();
+}
+
+function updateClock() {
+  const clock = document.getElementById("clock");
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, "0");
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  clock.textContent = `${hours}:${minutes}`;
+}
+
+fetchNews();
+updateClock();
+setInterval(updateClock, 10000);
+</script>
+
 </body>
 </html>
