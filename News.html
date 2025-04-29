@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wartezimmer Nachrichten</title>
+  <!-- Google Font Open Sans einbinden -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Grundlayout */
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      /* Schriftarten: Open Sans, Arial, Calibri, sans-serif */
+      font-family: 'Open Sans', Arial, Calibri, sans-serif;
+    }
+    /* Container passt sich 16:9 an */
+    .news-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    /* Bild füllt Container vollständig */
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease;
+    }
+    /* Overlay-Box am unteren Rand des Containers */
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .overlay h1 {
+      margin: 0;
+      font-size: 2.5em;
+      line-height: 1.2em;
+      font-weight: 600;
+    }
+    .overlay p {
+      margin: 10px 0 0;
+      font-size: 1.2em;
+      line-height: 1.4em;
+      font-weight: 400;
+    }
+    /* Fade-Effekte */
+    .fade-out { opacity: 0; }
+    .fade-in  { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="news-container">
+    <img id="newsImage" src="" alt="Nachrichtenbild">
+    <div class="overlay">
+      <h1 id="newsTitle">Aktuelle Top-Nachrichten werden geladen...</h1>
+      <p id="newsDescription"></p>
+    </div>
+  </div>
+
+  <script>
+    let newsItems = [], currentIndex = 0;
+    const placeholderImage = "https://via.placeholder.com/1920x1080?text=Keine+Vorschau";
+    const newsImage = document.getElementById('newsImage');
+    const newsTitle = document.getElementById('newsTitle');
+    const newsDescription = document.getElementById('newsDescription');
+
+    newsImage.onerror = () => { newsImage.src = placeholderImage; };
+
+    function extractImageFromDescription(desc) {
+      const m = desc.match(/<img[^>]+src="([^"]+)"/);
+      return m ? m[1] : null;
+    }
+
+    function enlargeImageUrl(url) {
+      return url ? url.replace(/w\d+/i, "w1920") : url;
+    }
+
+    async function fetchNews() {
+      try {
+        const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.n-tv.de/rss'));
+        const json = await res.json();
+        const xml = new DOMParser().parseFromString(json.contents, "application/xml");
+        const items = Array.from(xml.querySelectorAll("item"))
+          .filter(i => (i.querySelector("title")?.textContent || "").length > 5)
+          .slice(0,9)
+          .map(i => {
+            const t = i.querySelector("title")?.textContent || "Keine Überschrift";
+            const descRaw = i.querySelector("description")?.textContent || "";
+            const desc = descRaw.replace(/<[^>]*>/g, '').trim();
+            let img = extractImageFromDescription(i.querySelector("content\\:encoded")?.textContent || "")
+                   || i.querySelector("enclosure")?.getAttribute("url")
+                   || placeholderImage;
+            return { title: t, description: desc, imageUrl: enlargeImageUrl(img) };
+          });
+        newsItems = items;
+        showNews();
+        setInterval(nextNews, 10000);
+      } catch(e) {
+        console.error(e);
+        newsTitle.textContent = "Fehler beim Laden.";
+        newsDescription.textContent = "";
+      }
+    }
+
+    function showNews() {
+      if (!newsItems.length) return;
+      const { title, description, imageUrl } = newsItems[currentIndex];
+      newsImage.classList.add('fade-out');
+      newsTitle.classList.add('fade-out');
+      newsDescription.classList.add('fade-out');
+      setTimeout(() => {
+        newsImage.src = imageUrl;
+        newsTitle.textContent = title;
+        newsDescription.textContent = description;
+        newsImage.classList.replace('fade-out','fade-in');
+        newsTitle.classList.replace('fade-out','fade-in');
+        newsDescription.classList.replace('fade-out','fade-in');
+      }, 1000);
+    }
+
+    function nextNews() {
+      currentIndex = (currentIndex + 1) % newsItems.length;
+      showNews();
+    }
+
+    fetchNews();
+  </script>
+</body>
+</html>
