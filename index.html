@@ -2,30 +2,67 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Informationen in 130 Sekunden</title>
+  <title>Digital Signage mit Intro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
+      font-family: 'Open Sans', sans-serif;
       overflow: hidden;
+      background-color: #0f2c5c;
     }
+
+    body.intro-mode {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #intro-top {
+      flex: 8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 15em;
+      color: white;
+      text-align: center;
+    }
+
+    #intro-bottom {
+      flex: 2;
+      background-color: #0b1f3d;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5em;
+      text-align: center;
+    }
+
     iframe {
       width: 100%;
       height: 100%;
       border: none;
+      display: none;
+    }
+
+    body.active iframe {
+      display: block;
     }
   </style>
 </head>
-<body>
+<body class="intro-mode">
 
-<iframe id="signageFrame" src=""></iframe>
+<div id="intro-top">🗺</div>
+<div id="intro-bottom">Infos in 130&nbsp;Sekunden</div>
+<iframe id="signageFrame"></iframe>
 
 <script>
   const pages = [
-    { url: "https://dnsvlpt.github.io/wartezimmer-news/News.html", duration: 100 },  // 100 Sekunden
-    { url: "https://www.meteoblue.com/de/meteotv/8c0192", duration: 20 }, // 20 Sekunden
-    { url: "https://www.efa-bw.de/rtMonitor/XSLT_DM_REQUEST?itdLPxx_banner=mobidatabw.png&itdLPxx_branding=mobidatabw&locationServerActive=1&stateless=1&sRaLP=1&itdLPxx_generalInfo=false&mode=direct&type_dm=timedNode&stopID_dm=7001818&stopID_dm=7008408&name_dm=Bus/Bahn&itdLPxx_hint=false&itdLPxx_platform=false&itdLPxx_stopname=false&itdLPxx_useRealtime=true", duration: 10 }   // 10 Sekunden
+    { url: "https://dnsvlpt.github.io/wartezimmer-news/News.html", duration: 100 },
+    { url: "https://www.meteoblue.com/de/meteotv/8c0192", duration: 20 },
+    { url: "https://www.efa-bw.de/rtMonitor/XSLT_DM_REQUEST?itdLPxx_banner=mobidatabw.png&itdLPxx_branding=mobidatabw&locationServerActive=1&stateless=1&sRaLP=1&itdLPxx_generalInfo=false&mode=direct&type_dm=timedNode&stopID_dm=7001818&stopID_dm=7008408&name_dm=Bus/Bahn&itdLPxx_hint=false&itdLPxx_platform=false&itdLPxx_stopname=false&itdLPxx_useRealtime=true", duration: 10 }
   ];
 
   let currentIndex = 0;
@@ -37,10 +74,16 @@
     setTimeout(() => {
       currentIndex = (currentIndex + 1) % pages.length;
       showNextPage();
-    }, page.duration * 1000); // Sekunden in Millisekunden umwandeln
+    }, page.duration * 1000);
   }
 
-  showNextPage();
+  setTimeout(() => {
+    document.body.classList.remove("intro-mode");
+    document.body.classList.add("active");
+    document.getElementById("intro-top").remove();
+    document.getElementById("intro-bottom").remove();
+    showNextPage();
+  }, 5000);
 </script>
 
 </body>
