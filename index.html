@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Informationen in 130 Sekunden</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<iframe id="signageFrame" src=""></iframe>
+
+<script>
+  const pages = [
+    { url: "https://dnsvlpt.github.io/wartezimmer-news/News.html", duration: 100 },  // 100 Sekunden
+    { url: "https://www.meteoblue.com/de/meteotv/8c0192", duration: 20 }, // 20 Sekunden
+    { url: "https://www.efa-bw.de/rtMonitor/XSLT_DM_REQUEST?itdLPxx_banner=mobidatabw.png&itdLPxx_branding=mobidatabw&locationServerActive=1&stateless=1&sRaLP=1&itdLPxx_generalInfo=false&mode=direct&type_dm=timedNode&stopID_dm=7001818&stopID_dm=7008408&name_dm=Bus/Bahn&itdLPxx_hint=false&itdLPxx_platform=false&itdLPxx_stopname=false&itdLPxx_useRealtime=true", duration: 10 }   // 10 Sekunden
+  ];
+
+  let currentIndex = 0;
+  const frame = document.getElementById("signageFrame");
+
+  function showNextPage() {
+    const page = pages[currentIndex];
+    frame.src = page.url;
+    setTimeout(() => {
+      currentIndex = (currentIndex + 1) % pages.length;
+      showNextPage();
+    }, page.duration * 1000); // Sekunden in Millisekunden umwandeln
+  }
+
+  showNextPage();
+</script>
+
+</body>
+</html>
