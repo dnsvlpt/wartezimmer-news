@@ -24,9 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 15em;
-      color: white;
-      text-align: center;
+      background: linear-gradient(to bottom, #4a90e2 0%, #0b1f3d 100%); /* Helleres Blau oben, dunkleres Blau unten */
     }
 
     #intro-bottom {
@@ -36,8 +34,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2.5em;
+      font-size: 3em;
       text-align: center;
+      font-weight: bold;
     }
 
     iframe {
@@ -50,19 +49,48 @@
     body.active iframe {
       display: block;
     }
+
+    #intro-top img {
+      width: 70%;
+      height: auto;
+      filter: grayscale(100%) sepia(100%) hue-rotate(180deg); /* Bildfarbe ändern */
+    }
+
+    /* Animationsstil für den Intro-Text */
+    .intro-text {
+      opacity: 0;
+      transform: translateY(20px);  /* Der Text startet leicht unterhalb seiner Endposition */
+      animation: zoomIn 2s ease-out forwards; /* Langsames Einzoomen des Textes */
+    }
+
+    @keyframes zoomIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body class="intro-mode">
 
-<div id="intro-top">🗺</div>
-<div id="intro-bottom">Infos in 130&nbsp;Sekunden</div>
+<div id="intro-top">
+  <!-- PNG Weltkarte von Pixabay -->
+  <img src="https://cdn.pixabay.com/photo/2014/04/02/14/09/world-map-306338_1280.png" alt="Weltkarte">
+</div>
+<div id="intro-bottom">
+  <div class="intro-text">Die wichtigsten Nachrichten in 130&nbsp;Sekunden</div>
+</div>
 <iframe id="signageFrame"></iframe>
 
 <script>
   const pages = [
     { url: "https://dnsvlpt.github.io/wartezimmer-news/News.html", duration: 100 },
     { url: "https://www.meteoblue.com/de/meteotv/8c0192", duration: 20 },
-    { url: "https://www.efa-bw.de/rtMonitor/XSLT_DM_REQUEST?itdLPxx_banner=mobidatabw.png&itdLPxx_branding=mobidatabw&locationServerActive=1&stateless=1&sRaLP=1&itdLPxx_generalInfo=false&mode=direct&type_dm=timedNode&stopID_dm=7001818&stopID_dm=7008408&name_dm=Bus/Bahn&itdLPxx_hint=false&itdLPxx_platform=false&itdLPxx_stopname=false&itdLPxx_useRealtime=true", duration: 10 }
+    { url: "https://www.efa-bw.de/rtMonitor/XSLT_DM_REQUEST?itdLPxx_banner=mobidatabw.png&itdLPxx_branding=mobidatabw&locationServerActive=1&stateless=1&sRaLP=1&itdLPxx_generalInfo=false&mode=direct&type_dm=timedNode&stopID_dm=7001818&stopID_dm=7008408&name_dm=Bus/Bahn&itdLPxx_hint=false&itdLPxx_platform=false&itdLPxx_stopname=false&itdLPxx_useRealtime=true", duration: 15 }
   ];
 
   let currentIndex = 0;
