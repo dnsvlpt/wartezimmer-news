@@ -24,7 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(to bottom, #4a90e2 0%, #0b1f3d 100%); /* Helleres Blau oben, dunkleres Blau unten */
+      background: linear-gradient(to bottom, #4a90e2 0%, #0b1f3d 100%);
     }
 
     #intro-bottom {
@@ -32,11 +32,29 @@
       background-color: #0b1f3d;
       color: white;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-size: 3em;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    .intro-text-wrapper {
+      flex: 1;
       text-align: center;
+    }
+
+    .intro-text {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: zoomIn 2s ease-out forwards;
+      font-size: 3em;
       font-weight: bold;
+      white-space: nowrap;
+    }
+
+    #intro-logo {
+      height: 40px;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
     }
 
     iframe {
@@ -53,14 +71,7 @@
     #intro-top img {
       width: 70%;
       height: auto;
-      filter: grayscale(100%) sepia(100%) hue-rotate(180deg); /* Bildfarbe ändern */
-    }
-
-    /* Animationsstil für den Intro-Text */
-    .intro-text {
-      opacity: 0;
-      transform: translateY(20px);  /* Der Text startet leicht unterhalb seiner Endposition */
-      animation: zoomIn 2s ease-out forwards; /* Langsames Einzoomen des Textes */
+      filter: grayscale(100%) sepia(100%) hue-rotate(180deg);
     }
 
     @keyframes zoomIn {
@@ -77,42 +88,33 @@
 </head>
 <body class="intro-mode">
 
-<div id="intro-top">
-  <!-- PNG Weltkarte von Pixabay -->
-  <img src="https://cdn.pixabay.com/photo/2014/04/02/14/09/world-map-306338_1280.png" alt="Weltkarte">
-</div>
-<div id="intro-bottom">
-  <div class="intro-text">Die wichtigsten Nachrichten in 130&nbsp;Sekunden</div>
-</div>
-<iframe id="signageFrame"></iframe>
+  <div id="intro-top">
+    <img src="https://cdn.pixabay.com/photo/2014/04/02/14/09/world-map-306338_1280.png" alt="Weltkarte">
+  </div>
 
-<script>
-  const pages = [
-    { url: "https://dnsvlpt.github.io/wartezimmer-news/News.html", duration: 100 },
-    { url: "https://www.meteoblue.com/de/meteotv/8c0192", duration: 20 },
-    { url: "https://www.efa-bw.de/rtMonitor/XSLT_DM_REQUEST?itdLPxx_banner=mobidatabw.png&itdLPxx_branding=mobidatabw&locationServerActive=1&stateless=1&sRaLP=1&itdLPxx_generalInfo=false&mode=direct&type_dm=timedNode&stopID_dm=7001818&stopID_dm=7008408&name_dm=Bus/Bahn&itdLPxx_hint=false&itdLPxx_platform=false&itdLPxx_stopname=false&itdLPxx_useRealtime=true", duration: 15 }
-  ];
+  <div id="intro-bottom">
+    <div class="intro-text-wrapper">
+      <div class="intro-text">Die wichtigsten Nachrichten in 130&nbsp;Sekunden</div>
+    </div>
+    <img id="intro-logo" src="https://draht-walput.com/.cm4all/mediadb/Logos/dw_silber.png" alt="Logo">
+  </div>
 
-  let currentIndex = 0;
-  const frame = document.getElementById("signageFrame");
+  <iframe id="signageFrame"></iframe>
 
-  function showNextPage() {
-    const page = pages[currentIndex];
-    frame.src = page.url;
+  <script>
+    const pageUrl = "https://dnsvlpt.github.io/wartezimmer-news/News.html";
+    const frame = document.getElementById("signageFrame");
+
     setTimeout(() => {
-      currentIndex = (currentIndex + 1) % pages.length;
-      showNextPage();
-    }, page.duration * 1000);
-  }
+      document.body.classList.remove("intro-mode");
+      document.body.classList.add("active");
+      document.getElementById("intro-top").remove();
+      document.getElementById("intro-bottom").remove();
+      frame.src = pageUrl;
+    }, 5000);
+  </script>
 
-  setTimeout(() => {
-    document.body.classList.remove("intro-mode");
-    document.body.classList.add("active");
-    document.getElementById("intro-top").remove();
-    document.getElementById("intro-bottom").remove();
-    showNextPage();
-  }, 5000);
-</script>
+  <!-- Rechtlicher Hinweis: Copyright © Denis Valput. Dieser Quellcode ist urheberrechtlich geschützt. Eine Nutzung oder Vervielfältigung – auch auszugsweise – ist nur mit ausdrücklicher Genehmigung erlaubt. Zuwiderhandlungen werden zivil- und strafrechtlich verfolgt. -->
 
 </body>
 </html>
