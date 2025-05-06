@@ -41,24 +41,6 @@
       height: auto;
     }
 
-    /* Blaue Statusleiste direkt unter dem Header */
-    .status-bar {
-      width: 100%;
-      height: 5px;
-      background-color: #ccc;
-      position: fixed;
-      top: 5rem; /* Direkt unter dem Header */
-      left: 0;
-      z-index: 999;
-    }
-
-    .status-bar-filled {
-      height: 100%;
-      background-color: blue;
-      width: 0%; /* Anfangs ist sie leer */
-      transition: width 120s linear; /* Zeit von 120 Sekunden für die volle Füllung */
-    }
-
     main {
       margin-top: 6rem; /* Sicherstellen, dass der Inhalt direkt unter dem fixierten Header beginnt */
       text-align: center;
@@ -144,11 +126,6 @@
     Wichtige Informationen für Kundinnen und Kunden
   </header>
 
-  <!-- Blaue Statusleiste direkt unter dem Header -->
-  <div class="status-bar">
-    <div class="status-bar-filled" id="statusBar"></div>
-  </div>
-
   <main>
     <!-- Erste Seite: Zahlungsbedingungen + AGB -->
     <div id="text1" class="content active">
@@ -204,23 +181,12 @@
   <script>
     const text1 = document.getElementById("text1");
     const text2 = document.getElementById("text2");
-    const statusBar = document.getElementById("statusBar");
 
     // Timer auf 60 Sekunden setzen
     setTimeout(() => {
       text1.classList.remove("active");
       text2.classList.add("active");
     }, 60000); // 60 Sekunden
-
-    // Statusbalken zurücksetzen, falls er schon vollständig ist
-    window.onload = function() {
-      statusBar.style.width = "0%"; // Statusbalken auf 0% zurücksetzen
-
-      // Start der Statusbalken-Animation nach kurzem Warten
-      setTimeout(() => {
-        statusBar.style.width = "100%"; // Die Leiste wird sich jetzt in 120 Sekunden füllen
-      }, 50); // Verzögerung von 50ms
-    };
   </script>
 
 </body>
