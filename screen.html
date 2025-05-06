@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wartezimmer</title>
+    <style>
+        /* Stelle sicher, dass die HTML- und Body-Elemente die volle Höhe des Fensters einnehmen */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        /* Das iframe soll den gesamten verfügbaren Raum einnehmen */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;  /* Entferne den Rahmen des iframes */
+        }
+    </style>
+    <script type="text/javascript">
+        // Lade die b2c-Seite und wechsle dann nach 120 Sekunden zur index.html
+        window.onload = function() {
+            setTimeout(function() {
+                // Leite nach 120 Sekunden (120000 ms) zur index.html weiter
+                window.location.href = "https://dnsvlpt.github.io/wartezimmer-news/index.html";
+            }, 120000);  // 120000 Millisekunden = 120 Sekunden
+        };
+    </script>
+</head>
+<body>
+    <iframe src="https://dnsvlpt.github.io/wartezimmer-news/b2c.html"></iframe>
+</body>
+</html>
