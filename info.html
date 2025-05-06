@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wichtige Informationen</title>
+
+  <!-- Google Fonts: Noto Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      font-family: 'Noto Sans', sans-serif;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      background-color: red;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000; /* Damit der Header immer oben bleibt */
+      font-size: 24pt; /* Feste Schriftgröße für den Titel */
+      height: auto;
+    }
+
+    /* Blaue Statusleiste direkt unter dem Header */
+    .status-bar {
+      width: 100%;
+      height: 5px;
+      background-color: #ccc;
+      position: fixed;
+      top: 5rem; /* Direkt unter dem Header */
+      left: 0;
+      z-index: 999;
+    }
+
+    .status-bar-filled {
+      height: 100%;
+      background-color: blue;
+      width: 0%; /* Anfangs ist sie leer */
+      transition: width 120s linear; /* Zeit von 120 Sekunden für die volle Füllung */
+    }
+
+    main {
+      margin-top: 6rem; /* Sicherstellen, dass der Inhalt direkt unter dem fixierten Header beginnt */
+      text-align: center;
+      max-width: 90%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100%;
+      padding: 0;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      font-size: 24pt; /* Feste Schriftgröße für die Unterüberschrift */
+    }
+
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      font-size: 18pt; /* Feste Schriftgröße für den Inhaltstext */
+    }
+
+    .content {
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    a {
+      color: black;
+      text-decoration: none;
+      pointer-events: auto;
+    }
+
+    /* Für kleinere Bildschirme, Tablet und Smartphones */
+    @media (max-width: 768px) {
+      header {
+        font-size: 24pt; /* Titel bleibt gleich */
+      }
+
+      h2 {
+        font-size: 24pt; /* Unterüberschrift bleibt gleich */
+      }
+
+      p {
+        font-size: 18pt; /* Inhaltstext bleibt gleich */
+      }
+    }
+
+    /* Für sehr kleine Bildschirme */
+    @media (max-width: 480px) {
+      header {
+        font-size: 24pt; /* Titel bleibt gleich */
+      }
+
+      h2 {
+        font-size: 24pt; /* Unterüberschrift bleibt gleich */
+      }
+
+      p {
+        font-size: 18pt; /* Inhaltstext bleibt gleich */
+      }
+    }
+
+    /* Fixierter Text unten links */
+    .fixed-text {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: 11pt;
+      color: black;
+      z-index: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Wichtige Informationen für Kundinnen und Kunden
+  </header>
+
+  <!-- Blaue Statusleiste direkt unter dem Header -->
+  <div class="status-bar">
+    <div class="status-bar-filled" id="statusBar"></div>
+  </div>
+
+  <main>
+    <!-- Erste Seite: Zahlungsbedingungen + AGB -->
+    <div id="text1" class="content active">
+      <h2>Zahlungsbedingungen</h2>
+      <p>
+        Wir möchten Sie höflich darauf hinweisen, dass wir unsere Produkte ausschließlich gegen Bar- oder Kartenzahlung bzw. Vorabüberweisung anbieten. Ein Verkauf auf Lieferschein ist leider nicht möglich.
+      </p>
+      <p>
+        <strong>Info für Kartenzahlungen:</strong> Datenschutzinformationen für Karteninhaber sowie weitere Informationen zur Zahlungsabwicklung finden Sie unter:<br>
+        <a href="https://www.telecash.de/datenschutz" target="_blank">www.telecash.de/datenschutz</a>
+      </p>
+
+      <h2>Allgemeine Geschäftsbedingungen</h2>
+      <p>
+        Unsere Allgemeinen Geschäftsbedingungen (AGB), die alle rechtlichen Informationen zu Themen wie Lieferung, Bestellungen, Montage, Rückgaben und Gewährleistungsansprüchen beinhalten, finden Sie bequem online unter:
+      </p>
+      <p>
+        <a href="https://www.draht-walput.com/de/unternehmen/agb" target="_blank">
+          www.draht-walput.com/de/unternehmen/agb
+        </a>
+      </p>
+      <p>
+        Wir empfehlen Ihnen, sich vor Ihrem Einkauf mit unseren AGB vertraut zu machen, um alle relevanten Informationen zu Ihrem Kauf zu kennen.
+      </p>
+    </div>
+
+    <!-- Zweite Seite: Rückgabe und Widerruf -->
+    <div id="text2" class="content">
+      <h2>Rückgabe und Widerruf im B2C-Bereich</h2>
+      <p>
+        Wir möchten, dass Sie mit Ihrem Einkauf bei uns rundum zufrieden sind. Sollte es dennoch notwendig sein, einen Artikel zurückzugeben, möchten wir Sie bitten, unsere Rückgabebedingungen zu beachten.
+      </p>
+      <p>
+        Im stationären Handel, also bei Käufen direkt im Laden, gibt es kein gesetzliches Widerrufsrecht. Das bedeutet, dass Kunden im Gegensatz zu Online-Käufen keinen Anspruch auf Rückgabe oder Widerruf haben. Das gesetzliche Widerrufsrecht, das für Online-Käufe gilt (nach § 355 BGB), findet nicht auf Einkäufe im Laden Anwendung.
+      </p>
+      <p>
+        Aus Kulanz bieten wir Privatkunden eine Rückgabe innerhalb von 14 Tagen nach Kaufdatum an. Bei Rückgaben erheben wir eine Pauschale in Höhe von 25% des Kaufpreises. Diese Pauschale deckt die Kosten für die Wideraufbereitung des Artikels sowie administrative Aufwände.
+      </p>
+      <p>
+        Die Rückzahlung erfolgt innerhalb von 30 Tagen auf Ihr Bankkonto. Bitte füllen Sie hierfür das entsprechende Formular aus, das Sie von unserem Verkaufspersonal erhalten.
+      </p>
+      <p>
+        Nicht neuwertige, unvollständige, stark zerkratzte, verschmutzte oder in der Eigenschaft geänderte Ware sowie Sonderausführungen und Bestellware sind von der Rückgabe generell ausgeschlossen.
+      </p>
+    </div>
+  </main>
+
+  <!-- Fixierter Text unten links -->
+  <div class="fixed-text">
+    Dieser Aushang ist auch an der Theke verfügbar.
+  </div>
+
+  <script>
+    const text1 = document.getElementById("text1");
+    const text2 = document.getElementById("text2");
+    const statusBar = document.getElementById("statusBar");
+
+    // Timer auf 60 Sekunden setzen
+    setTimeout(() => {
+      text1.classList.remove("active");
+      text2.classList.add("active");
+    }, 60000); // 60 Sekunden
+
+    // Animation der Statusleiste (blau) in 120 Sekunden
+    statusBar.style.width = "100%"; // Die Leiste wird sich jetzt in 120 Sekunden füllen
+  </script>
+
+</body>
+</html>
