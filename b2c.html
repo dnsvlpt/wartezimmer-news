@@ -212,8 +212,15 @@
       text2.classList.add("active");
     }, 60000); // 60 Sekunden
 
-    // Animation der Statusleiste (blau) in 120 Sekunden
-    statusBar.style.width = "100%"; // Die Leiste wird sich jetzt in 120 Sekunden füllen
+    // Statusbalken zurücksetzen, falls er schon vollständig ist
+    window.onload = function() {
+      statusBar.style.width = "0%"; // Statusbalken auf 0% zurücksetzen
+
+      // Start der Statusbalken-Animation nach kurzem Warten
+      setTimeout(() => {
+        statusBar.style.width = "100%"; // Die Leiste wird sich jetzt in 120 Sekunden füllen
+      }, 50); // Verzögerung von 50ms
+    };
   </script>
 
 </body>
