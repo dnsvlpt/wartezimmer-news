@@ -2,15 +2,15 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
   <title>Wichtige Informationen</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
-
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      width: 1920px;
+      height: 1080px;
       font-family: 'Noto Sans', sans-serif;
       background: white;
       color: black;
@@ -23,22 +23,23 @@
       color: white;
       text-align: center;
       font-weight: bold;
-      letter-spacing: 0.15em;
+      letter-spacing: normal;
       padding: 1rem;
+      font-size: 24pt;
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1000;
-      font-size: 24pt;
     }
 
     .scroll-container {
       position: absolute;
-      top: 5.5rem;
+      top: 5.5rem; /* ca. 88px Platz für Header */
       bottom: 0;
       left: 0;
       right: 0;
       overflow: hidden;
+      height: calc(100% - 5.5rem);
     }
 
     .scroll-content {
@@ -59,8 +60,8 @@
 
     p {
       font-size: 18pt;
-      line-height: 1.6;
-      margin-bottom: 1rem;
+      line-height: 1.4;
+      margin-bottom: 0.7rem;
     }
 
     a {
@@ -84,47 +85,30 @@
     Wichtige Informationen für Kundinnen und Kunden
   </header>
 
-  <div class="scroll-container">
+  <div class="scroll-container" id="scrollContainer">
     <div class="scroll-content" id="scrollContent">
-      <div class="scroll-inner">
+      <div class="scroll-inner" id="scrollInner">
         <h2>Zahlungsbedingungen</h2>
         <p>
-          Wir möchten Sie höflich darauf hinweisen, dass wir unsere Produkte ausschließlich gegen Bar- oder Kartenzahlung bzw. Vorabüberweisung anbieten. Ein Verkauf auf Lieferschein ist leider nicht möglich.
-        </p>
-        <p>
+          Wir möchten Sie höflich darauf hinweisen, dass wir unsere Produkte ausschließlich gegen Bar- oder Kartenzahlung bzw. Vorabüberweisung anbieten. Ein Verkauf auf Lieferschein ist leider nicht möglich.<br><br>
           <strong>Info für Kartenzahlungen:</strong> Datenschutzinformationen für Karteninhaber sowie weitere Informationen zur Zahlungsabwicklung finden Sie unter:<br>
-          <a href="https://www.telecash.de/datenschutz" target="_blank">www.telecash.de/datenschutz</a>
+          <a href="https://www.telecash.de/datenschutz" target="_blank"><i>www.telecash.de/datenschutz</i></a>
         </p>
-
         <h2>Allgemeine Geschäftsbedingungen</h2>
         <p>
-          Unsere Allgemeinen Geschäftsbedingungen (AGB), die alle rechtlichen Informationen zu Themen wie Lieferung, Bestellungen, Montage, Rückgaben und Gewährleistungsansprüchen beinhalten, finden Sie bequem online unter:
-        </p>
-        <p>
-          <a href="https://www.draht-walput.com/de/unternehmen/agb" target="_blank">
-            www.draht-walput.com/de/unternehmen/agb
-          </a>
-        </p>
-        <p>
+          Unsere Allgemeinen Geschäftsbedingungen (AGB), die alle rechtlichen Informationen zu Themen wie Lieferung, Bestellungen, Montage, Rückgaben und Gewährleistungsansprüchen beinhalten, finden Sie bequem online unter:<br><br>
+          <a href="https://www.draht-walput.com/de/unternehmen/agb" target="_blank"><i>www.draht-walput.com/de/unternehmen/agb</i></a><br><br>
           Wir empfehlen Ihnen, sich vor Ihrem Einkauf mit unseren AGB vertraut zu machen, um alle relevanten Informationen zu Ihrem Kauf zu kennen.
         </p>
-
-        <h2 id="stopHere">Rückgabe und Widerruf im B2C-Bereich</h2>
+        <h2>Rückgabe und Widerruf im B2C-Bereich</h2>
         <p>
-          Wir möchten, dass Sie mit Ihrem Einkauf bei uns rundum zufrieden sind. Sollte es dennoch notwendig sein, einen Artikel zurückzugeben, möchten wir Sie bitten, unsere Rückgabebedingungen zu beachten.
+          Wir möchten, dass Sie mit Ihrem Einkauf bei uns rundum zufrieden sind. Sollte es dennoch notwendig sein, einen Artikel zurückzugeben, möchten wir Sie bitten, unsere Rückgabebedingungen zu beachten.<br>
+          Im stationären Handel, also bei Käufen direkt im Laden, gibt es <strong>kein gesetzliches Widerrufsrecht</strong>. Das bedeutet, dass Kunden im Gegensatz zu Online-Käufen <strong>keinen Anspruch auf Rückgabe oder Widerruf</strong> haben. Das gesetzliche Widerrufsrecht, das für Online-Käufe gilt (nach § 355 BGB), <strong>findet nicht auf Einkäufe im Laden Anwendung</strong>.<br>
+          Aus <strong>Kulanz</strong> bieten wir <strong>Privatkunden</strong> eine Rückgabe <strong>innerhalb von 14 Tagen nach Kaufdatum</strong> an. Bei Rückgaben erheben wir eine <strong>Pauschale</strong> in Höhe von <strong>25% des Kaufpreises</strong>. Diese Pauschale deckt die Kosten für die Wiederaufbereitung des Artikels sowie administrative Aufwände.<br>
+          Die <strong>Rückzahlung</strong> erfolgt <strong>innerhalb von 30 Tagen</strong> auf Ihr <strong>Bankkonto</strong>. Bitte füllen Sie hierfür das entsprechende Formular aus, das Sie von unserem Verkaufspersonal erhalten.<br>
+          <strong>Nicht neuwertige, unvollständige, stark zerkratzte, verschmutzte oder in der Eigenschaft geänderte Ware</strong> sowie <strong>Sonderausführungen und Bestellware</strong> sind von der Rückgabe generell <strong>ausgeschlossen</strong>.
         </p>
-        <p>
-          Im stationären Handel, also bei Käufen direkt im Laden, gibt es kein gesetzliches Widerrufsrecht. Das bedeutet, dass Kunden im Gegensatz zu Online-Käufen keinen Anspruch auf Rückgabe oder Widerruf haben. Das gesetzliche Widerrufsrecht, das für Online-Käufe gilt (nach § 355 BGB), findet nicht auf Einkäufe im Laden Anwendung.
-        </p>
-        <p>
-          Aus Kulanz bieten wir Privatkunden eine Rückgabe innerhalb von 14 Tagen nach Kaufdatum an. Bei Rückgaben erheben wir eine Pauschale in Höhe von 25% des Kaufpreises. Diese Pauschale deckt die Kosten für die Wiederaufbereitung des Artikels sowie administrative Aufwände.
-        </p>
-        <p>
-          Die Rückzahlung erfolgt innerhalb von 30 Tagen auf Ihr Bankkonto. Bitte füllen Sie hierfür das entsprechende Formular aus, das Sie von unserem Verkaufspersonal erhalten.
-        </p>
-        <p>
-          Nicht neuwertige, unvollständige, stark zerkratzte, verschmutzte oder in der Eigenschaft geänderte Ware sowie Sonderausführungen und Bestellware sind von der Rückgabe generell ausgeschlossen.
-        </p>
+<p> </p>
       </div>
     </div>
   </div>
@@ -135,19 +119,21 @@
 
   <script>
     window.addEventListener("load", () => {
+      const scrollContainer = document.getElementById("scrollContainer");
       const scrollContent = document.getElementById("scrollContent");
-      const stopHere = document.getElementById("stopHere");
+      const scrollInner = document.getElementById("scrollInner");
 
-      const delayBeforeStart = 10000; // 10 Sekunden
-      const scrollDuration = 100000;  // 100 Sekunden
-
-      // Abstand der Zielüberschrift relativ zum Container
-      const targetOffset = stopHere.getBoundingClientRect().top - scrollContent.getBoundingClientRect().top;
+      const delayBeforeStart = 5000; // 5 Sekunden
+      const scrollDuration = 90000;  // 90 Sekunden
 
       setTimeout(() => {
+        const totalHeight = scrollInner.scrollHeight;
+        const visibleHeight = scrollContainer.clientHeight;
+        const scrollDistance = totalHeight - visibleHeight;
+
         scrollContent.animate([
           { transform: "translateY(0px)" },
-          { transform: `translateY(-${targetOffset}px)` }
+          { transform: `translateY(-${scrollDistance}px)` }
         ], {
           duration: scrollDuration,
           fill: "forwards",
