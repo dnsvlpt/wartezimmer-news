@@ -2,39 +2,39 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wichtige Informationen</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      width: 1920px;
-      height: 1080px;
+      width: 100vw;
+      height: 100vh;
       font-family: 'Noto Sans', sans-serif;
-      background: white;
-      color: black;
+      background: #f5f6f8;
+      color: #333;
       overflow: hidden;
     }
 
     header {
       width: 100%;
-      background-color: red;
+      background-color: #003366;
       color: white;
       text-align: center;
       font-weight: bold;
-      letter-spacing: normal;
-      padding: 1rem;
-      font-size: 24pt;
+      padding: 1.2rem;
+      font-size: 20pt;
       position: fixed;
       top: 0;
       left: 0;
       z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .scroll-container {
       position: absolute;
-      top: 5.5rem; /* ca. 88px Platz für Header */
+      top: 5.5rem;
       bottom: 0;
       left: 0;
       right: 0;
@@ -48,25 +48,42 @@
     }
 
     .scroll-inner {
-      padding: 0 5%;
+      padding: 2rem 5%;
       display: flex;
       flex-direction: column;
+      gap: 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-box {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     h2 {
-      margin-top: 2rem;
-      font-size: 24pt;
+      margin-top: 0;
+      font-size: 22pt;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 0.5rem;
+      color: #003366;
     }
 
     p {
-      font-size: 18pt;
-      line-height: 1.4;
-      margin-bottom: 0.7rem;
+      font-size: 16pt;
+      line-height: 1.6;
+      margin-bottom: 1rem;
     }
 
     a {
-      color: black;
-      text-decoration: none;
+      color: #003366;
+      text-decoration: underline;
+    }
+
+    strong {
+      color: #000;
     }
 
     .fixed-text {
@@ -74,7 +91,7 @@
       bottom: 1rem;
       left: 1rem;
       font-size: 11pt;
-      color: black;
+      color: #666;
       z-index: 500;
     }
   </style>
@@ -88,27 +105,36 @@
   <div class="scroll-container" id="scrollContainer">
     <div class="scroll-content" id="scrollContent">
       <div class="scroll-inner" id="scrollInner">
-        <h2>Zahlungsbedingungen</h2>
-        <p>
-          Wir möchten Sie höflich darauf hinweisen, dass wir unsere Produkte ausschließlich gegen Bar- oder Kartenzahlung bzw. Vorabüberweisung anbieten. Ein Verkauf auf Lieferschein ist leider nicht möglich.<br><br>
-          <strong>Info für Kartenzahlungen:</strong> Datenschutzinformationen für Karteninhaber sowie weitere Informationen zur Zahlungsabwicklung finden Sie unter:<br>
-          <a href="https://www.telecash.de/datenschutz" target="_blank"><i>www.telecash.de/datenschutz</i></a>
-        </p>
-        <h2>Allgemeine Geschäftsbedingungen</h2>
-        <p>
-          Unsere Allgemeinen Geschäftsbedingungen (AGB), die alle rechtlichen Informationen zu Themen wie Lieferung, Bestellungen, Montage, Rückgaben und Gewährleistungsansprüchen beinhalten, finden Sie bequem online unter:<br><br>
-          <a href="https://www.draht-walput.com/de/unternehmen/agb" target="_blank"><i>www.draht-walput.com/de/unternehmen/agb</i></a><br><br>
-          Wir empfehlen Ihnen, sich vor Ihrem Einkauf mit unseren AGB vertraut zu machen, um alle relevanten Informationen zu Ihrem Kauf zu kennen.
-        </p>
-        <h2>Rückgabe und Widerruf im B2C-Bereich</h2>
-        <p>
-          Wir möchten, dass Sie mit Ihrem Einkauf bei uns rundum zufrieden sind. Sollte es dennoch notwendig sein, einen Artikel zurückzugeben, möchten wir Sie bitten, unsere Rückgabebedingungen zu beachten.<br>
-          Im stationären Handel, also bei Käufen direkt im Laden, gibt es <strong>kein gesetzliches Widerrufsrecht</strong>. Das bedeutet, dass Kunden im Gegensatz zu Online-Käufen <strong>keinen Anspruch auf Rückgabe oder Widerruf</strong> haben. Das gesetzliche Widerrufsrecht, das für Online-Käufe gilt (nach § 355 BGB), <strong>findet nicht auf Einkäufe im Laden Anwendung</strong>.<br>
-          Aus <strong>Kulanz</strong> bieten wir <strong>Privatkunden</strong> eine Rückgabe <strong>innerhalb von 14 Tagen nach Kaufdatum</strong> an. Bei Rückgaben erheben wir eine <strong>Pauschale</strong> in Höhe von <strong>25% des Kaufpreises</strong>. Diese Pauschale deckt die Kosten für die Wiederaufbereitung des Artikels sowie administrative Aufwände.<br>
-          Die <strong>Rückzahlung</strong> erfolgt <strong>innerhalb von 30 Tagen</strong> auf Ihr <strong>Bankkonto</strong>. Bitte füllen Sie hierfür das entsprechende Formular aus, das Sie von unserem Verkaufspersonal erhalten.<br>
-          <strong>Nicht neuwertige, unvollständige, stark zerkratzte, verschmutzte oder in der Eigenschaft geänderte Ware</strong> sowie <strong>Sonderausführungen und Bestellware</strong> sind von der Rückgabe generell <strong>ausgeschlossen</strong>.
-        </p>
-<p> </p>
+
+        <div class="section-box">
+          <h2>Zahlungsbedingungen</h2>
+          <p>
+            Wir möchten Sie höflich darauf hinweisen, dass wir unsere Produkte ausschließlich gegen Bar- oder Kartenzahlung bzw. Vorabüberweisung anbieten. Ein Verkauf auf Lieferschein ist leider nicht möglich.<br><br>
+            <strong>Info für Kartenzahlungen:</strong> Datenschutzinformationen für Karteninhaber sowie weitere Informationen zur Zahlungsabwicklung finden Sie unter:<br>
+            <a href="https://www.telecash.de/datenschutz" target="_blank">www.telecash.de/datenschutz</a>
+          </p>
+        </div>
+
+        <div class="section-box">
+          <h2>Allgemeine Geschäftsbedingungen</h2>
+          <p>
+            Unsere Allgemeinen Geschäftsbedingungen (AGB), die alle rechtlichen Informationen zu Themen wie Lieferung, Bestellungen, Montage, Rückgaben und Gewährleistungsansprüchen beinhalten, finden Sie bequem online unter:<br><br>
+            <a href="https://www.draht-walput.com/de/unternehmen/agb" target="_blank">www.draht-walput.com/de/unternehmen/agb</a><br><br>
+            Wir empfehlen Ihnen, sich vor Ihrem Einkauf mit unseren AGB vertraut zu machen, um alle relevanten Informationen zu Ihrem Kauf zu kennen.
+          </p>
+        </div>
+
+        <div class="section-box">
+          <h2>Rückgabe und Widerruf im B2C-Bereich</h2>
+          <p>
+            Wir möchten, dass Sie mit Ihrem Einkauf bei uns rundum zufrieden sind. Sollte es dennoch notwendig sein, einen Artikel zurückzugeben, möchten wir Sie bitten, unsere Rückgabebedingungen zu beachten.<br><br>
+            Im stationären Handel, also bei Käufen direkt im Laden, gibt es <strong>kein gesetzliches Widerrufsrecht</strong>. Das bedeutet, dass Kunden im Gegensatz zu Online-Käufen <strong>keinen Anspruch auf Rückgabe oder Widerruf</strong> haben. Das gesetzliche Widerrufsrecht, das für Online-Käufe gilt (nach § 355 BGB), <strong>findet nicht auf Einkäufe im Laden Anwendung</strong>.<br><br>
+            Aus <strong>Kulanz</strong> bieten wir <strong>Privatkunden</strong> eine Rückgabe <strong>innerhalb von 14 Tagen nach Kaufdatum</strong> an. Bei Rückgaben erheben wir eine <strong>Pauschale</strong> in Höhe von <strong>25% des Kaufpreises</strong>. Diese Pauschale deckt die Kosten für die Wiederaufbereitung des Artikels sowie administrative Aufwände.<br><br>
+            Die <strong>Rückzahlung</strong> erfolgt <strong>innerhalb von 30 Tagen</strong> auf Ihr <strong>Bankkonto</strong>. Bitte füllen Sie hierfür das entsprechende Formular aus, das Sie von unserem Verkaufspersonal erhalten.<br><br>
+            <strong>Nicht neuwertige, unvollständige, stark zerkratzte, verschmutzte oder in der Eigenschaft geänderte Ware</strong> sowie <strong>Sonderausführungen und Bestellware</strong> sind von der Rückgabe generell <strong>ausgeschlossen</strong>.
+          </p>
+        </div>
+
       </div>
     </div>
   </div>
@@ -142,6 +168,5 @@
       }, delayBeforeStart);
     });
   </script>
-
 </body>
 </html>
